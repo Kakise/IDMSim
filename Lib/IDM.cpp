@@ -7,21 +7,21 @@
 #include <algorithm>
 #include "IDM.h"
 
-/* Intelligent Driver Model
-*
-* @param v0:   desired speed            [m/s]
-* @param T:    time headway             [s]  -> ~1.8s is a great value
-* @param s0:   minimum gap              [m] -> 78 meters in France for 130km/h (A calculer automatiquement?)
-* @param a:    maximum acceleration     [m/s²]
-* @param b:    comfortable deceleration [m/s²]
-*/
-
+///
+/// \param a float
+/// \param b float
+/// \return Minimum of two floats
 float minf(float a, float b) {
     return a < b ? a : b;
 }
 
-// Class constructor
-IDM::IDM(float v0, float T, float s0, float a, float b) {
+/// Intelligent Driver Model
+/// \param v0 Desired speed in m/s
+/// \param T Time headway in s. 1.8s is a great value.
+/// \param s0 Minimum gap in m
+/// \param a Maximum acceleration in m/s²
+/// \param b Comfortable deceleration in m/s²
+IDM::IDM(float v0, float T, double s0, float a, float b) {
     m_v0 = v0;
     m_T = T;
     m_s0 = s0;
@@ -29,9 +29,12 @@ IDM::IDM(float v0, float T, float s0, float a, float b) {
     m_b = b;
 }
 
-// This function calculates the acceleration of a vehicle following the IDM
-float IDM::a(float s, float v, float vl) {
-    // Randomness
+/// This function calculates the acceleration using the IDM model.
+/// \param s Current gap in m
+/// \param v Current speed in m/s
+/// \param vl Leading speed in m/s
+/// \return The new acceleration value
+double IDM::a(double s, double v, double vl) {
     std::random_device rd;
     std::mt19937 mt(rd());
     std::uniform_real_distribution<double> dist(0.0, 1.0);
@@ -40,16 +43,16 @@ float IDM::a(float s, float v, float vl) {
         return -bmax;
     }
 
-    float accRnd = (noiseAcc * ((float) (dist(mt) / double(RAND_MAX)))) * alpha_v0;
+    double accRnd = noiseAcc * dist(mt) * alpha_v0;
 
-    float v0eff = minf(m_v0, minf(speedlimit, speedmax));
+    double v0eff = minf(m_v0, minf(speedlimit, speedmax));
 
-    float accFree;
+    double accFree;
 
-    accFree = m_a * (1 - (v < v0eff ? (float) pow(v / v0eff, 4) : v / v0eff));
+    accFree = m_a * (1 - (v < v0eff ? pow(v / v0eff, 4) : v / v0eff));
 
     double sstar = m_s0 + std::max(0.0d, v * m_T + 0.5 * v * (v - vl) / sqrt(m_a * m_b));
-    float accInt = -m_a * (float) pow(sstar / std::max(s, m_s0), 2);
+    double accInt = -m_a * pow(sstar / std::max(s, m_s0), 2);
 
     if (v0eff < 0.00001) {
         return 0;

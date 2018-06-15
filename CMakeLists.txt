@@ -3,4 +3,4 @@ project(IDMSim)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(IDMSim main.cpp Lib/IDM.cpp Lib/IDM.h)
+add_executable(IDMSim main.cpp Lib/IDM.cpp Lib/IDM.h Lib/Vehicle.cpp Lib/Vehicle.h)
