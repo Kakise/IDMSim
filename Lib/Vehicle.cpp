@@ -25,3 +25,21 @@ double Vehicle::x() {
 double Vehicle::a() {
     return m_a;
 }
+
+/// This function updates the position of a vehicle
+/// @param x New position
+void Vehicle::x(double x) {
+    m_x = x;
+}
+
+/// This function updates the speed of a vehicle
+/// @param v New speed
+void Vehicle::v(double v) {
+    m_v = v;
+}
+
+/// This function updates the acceleration of a vehicle
+/// @param a New acceleration
+void Vehicle::a(double a) {
+    m_a =a;
+}

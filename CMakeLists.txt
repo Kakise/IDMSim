@@ -3,4 +3,14 @@ project(IDMSim)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(IDMSim main.cpp Lib/IDM.cpp Lib/IDM.h Lib/Vehicle.cpp Lib/Vehicle.h)
+find_package(SDL2 REQUIRED)
+
+add_executable(IDMSim
+        Lib/IDM.cpp
+        Lib/IDM.h
+        Lib/Vehicle.cpp
+        Lib/Vehicle.h
+        main.cpp
+        Lib/lib.h)
+
+target_link_libraries(IDMSim ${SDL2_LIBRARIES})
