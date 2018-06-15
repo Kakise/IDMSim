@@ -1,10 +1,12 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <vector>
+#include "GUI.h"
 #include "Lib/lib.h"
 
 int main() {
     IDM model = IDM(130 / 3.6f, 1.8f, 78.0f, 0.3f, 2.0f);
+    GUI GUI;
     std::vector<Vehicle> Cars;
 
     Cars.emplace_back(Vehicle(0, 130 / 3.6, 0));
@@ -16,6 +18,13 @@ int main() {
         return EXIT_FAILURE;
     }
 
+    SDL_Window *screen = SDL_CreateWindow("IDMSim",
+                                          SDL_WINDOWPOS_UNDEFINED,
+                                          SDL_WINDOWPOS_UNDEFINED,
+                                          640, 480,
+                                          SDL_WINDOW_OPENGL);
+    GUI.pause();
+    
     SDL_Quit();
     return EXIT_SUCCESS;
 }

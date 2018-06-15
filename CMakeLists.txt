@@ -11,6 +11,6 @@ add_executable(IDMSim
         Lib/Vehicle.cpp
         Lib/Vehicle.h
         main.cpp
-        Lib/lib.h)
+        Lib/lib.h GUI.cpp GUI.h)
 
 target_link_libraries(IDMSim ${SDL2_LIBRARIES})
