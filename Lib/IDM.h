@@ -6,10 +6,13 @@
 #define IDMSIM_IDM_H
 
 
+#include "Vehicle.h"
+
 class IDM {
 public:
     IDM(float v0, float T, double s0, float a, float b);
 
+    void update(std::vector<Vehicle> *CarArr, double dt);
     double a(double s, double v, double vl);
 
 private:

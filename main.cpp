@@ -14,13 +14,13 @@ int main() {
     std::cout << "[DEBUG] La vitesse de la première voiture est: " << Cars.at(0).v() << " mètres par secondes." << std::endl;
 
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        std::cout << "[ERREUR] Erreur d'initialisation de la SDL." << std::endl;
+        std::cerr << "[ERREUR] Erreur d'initialisation de la SDL: " << SDL_GetError() << std::endl;
         return EXIT_FAILURE;
     }
 
     SDL_Window *screen = SDL_CreateWindow("IDMSim",
-                                          SDL_WINDOWPOS_UNDEFINED,
-                                          SDL_WINDOWPOS_UNDEFINED,
+                                          0,
+                                          0,
                                           640, 480,
                                           SDL_WINDOW_OPENGL);
     GUI.pause();

@@ -6,10 +6,14 @@
 #define IDMSIM_GUI_H
 
 #include <SDL2/SDL.h>
+#include <vector>
+#include "Lib/Vehicle.h"
 
 class GUI {
 public:
     void pause();
+
+    void update(std::vector<Vehicle> CarArr);
 };
 
 

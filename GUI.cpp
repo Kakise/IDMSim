@@ -12,8 +12,14 @@ void GUI::pause() {
     while (ok) {
         SDL_WaitEvent(&event);
         switch(event.type) {
+            default:
+
             case SDL_QUIT:
                 ok = 0;
         }
     }
+}
+
+void GUI::update(std::vector<Vehicle> CarArr) {
+
 }

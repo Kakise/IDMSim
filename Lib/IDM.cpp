@@ -7,7 +7,7 @@
 #include <algorithm>
 #include "IDM.h"
 
-///
+/// minf function
 /// \param a float
 /// \param b float
 /// \return Minimum of two floats
@@ -58,5 +58,21 @@ double IDM::a(double s, double v, double vl) {
         return 0;
     } else {
         return std::max(-bmax, accFree + accInt + accRnd);
+    }
+}
+
+/// This functions updates the simulation. More precisely, it takes params at a t state and updates the car array to a t+dt state.
+/// \param CarArr The vector containing the vehicles to update.
+void IDM::update(std::vector<Vehicle> *CarArr, double dt) {
+    // Updates the first car separately as it needs to be "following" a vehicle in an infinite distance that has an infinite speed.
+    CarArr->at(0).a(a(pow(10, 10), 130 / 3.6, pow(10, 10)));
+    CarArr->at(0).v(CarArr->at(0).v() + CarArr->at(0).a() * dt);
+    CarArr->at(0).x(0.5 * CarArr->at(0).a() * pow(dt, 2) + CarArr->at(0).v() + CarArr->at(0).x());
+
+    // Here's a loop to update each vehicle one by one
+    for (size_t i = 1, size = CarArr->size(); i < size; i++) {
+        CarArr->at(i).a(a(CarArr->at(i - 1).x() - CarArr->at(i).x(), CarArr->at(i).v(), CarArr->at(i - 1).v()));
+        CarArr->at(i).v(CarArr->at(i).v() + CarArr->at(i).a() * dt);
+        CarArr->at(i).x(0.5 * CarArr->at(i).a() * pow(dt, 2) + CarArr->at(i).v() + CarArr->at(i).x());
     }
 }
